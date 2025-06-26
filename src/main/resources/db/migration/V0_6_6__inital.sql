@@ -107,15 +107,15 @@ CREATE TABLE `transaction` (
 -- Triggers on table `transaction`
 --
 
-DELIMITER ;;
+-- DELIMITER ;;
 CREATE TRIGGER `transaction_AINS` AFTER INSERT ON transaction FOR EACH ROW
-  UPDATE user SET user.inTransaction=1 WHERE user.idTag=NEW.idTag;;
-DELIMITER ;
+  UPDATE user SET user.inTransaction=1 WHERE user.idTag=NEW.idTag;
+-- DELIMITER ;
 
-DELIMITER ;;
+-- DELIMITER ;;
 CREATE TRIGGER `transaction_AUPD` AFTER UPDATE ON transaction FOR EACH ROW
-  UPDATE user SET user.inTransaction=0 WHERE user.idTag=NEW.idTag;;
-DELIMITER ;
+  UPDATE user SET user.inTransaction=0 WHERE user.idTag=NEW.idTag;
+-- DELIMITER ;
 
 --
 -- Table structure for table `connector_metervalue`
@@ -172,13 +172,13 @@ CREATE TABLE `reservation_expired` (
 -- Dumping events for database
 --
 
-DELIMITER ;;
+-- DELIMITER ;;
 
 CREATE EVENT `expire_reservations`
   ON SCHEDULE EVERY 1 DAY STARTS '2013-11-16 03:00:00' ON COMPLETION NOT PRESERVE ENABLE DO
   BEGIN
     INSERT INTO reservation_expired (SELECT * FROM reservation WHERE reservation.expiryDatetime <= NOW());
     DELETE FROM reservation WHERE reservation.expiryDatetime <= NOW();
-  END;;
+  END;
 
-DELIMITER ;
+-- DELIMITER ;
