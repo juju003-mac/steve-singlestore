@@ -348,6 +348,7 @@
                          namespace reserved (e.g. 8.x.x). new migrations in core version should
                          be executed in the extended version as well -->
                     <outOfOrder>true</outOfOrder>
+                    <useMysqlMetadataLock>false</useMysqlMetadataLock>
 
                     <!-- Because maven produces this warning after upgrading from 4.2.0 to 5.1.0:
                          [WARNING] Could not find schema history table `stevedb`.`flyway_schema_history`, but found
