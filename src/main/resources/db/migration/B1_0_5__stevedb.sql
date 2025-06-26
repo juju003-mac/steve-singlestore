@@ -1,4 +1,4 @@
-/*!999999\- enable the sandbox mode */ 
+-- /*!999999\- enable the sandbox mode */ 
 -- MariaDB dump 10.19-11.4.2-MariaDB, for Win64 (AMD64)
 --
 -- Host: localhost    Database: SteveDB
@@ -48,14 +48,14 @@ CREATE TABLE `charge_box` (
   `charge_box_serial_number` varchar(255) DEFAULT NULL,
   `fw_version` varchar(255) DEFAULT NULL,
   `fw_update_status` varchar(255) DEFAULT NULL,
-  `fw_update_timestamp` timestamp(6) NULL DEFAULT NULL,
+  `fw_update_timestamp` timestamp NULL DEFAULT NULL,
   `iccid` varchar(255) DEFAULT NULL,
   `imsi` varchar(255) DEFAULT NULL,
   `meter_type` varchar(255) DEFAULT NULL,
   `meter_serial_number` varchar(255) DEFAULT NULL,
   `diagnostics_status` varchar(255) DEFAULT NULL,
-  `diagnostics_timestamp` timestamp(6) NULL DEFAULT NULL,
-  `last_heartbeat_timestamp` timestamp(6) NULL DEFAULT NULL,
+  `diagnostics_timestamp` timestamp NULL DEFAULT NULL,
+  `last_heartbeat_timestamp` timestamp NULL DEFAULT NULL,
   `description` mediumtext DEFAULT NULL,
   `note` mediumtext DEFAULT NULL,
   `location_latitude` decimal(11,8) DEFAULT NULL,
@@ -81,10 +81,10 @@ CREATE TABLE `charging_profile` (
   `charging_profile_purpose` varchar(255) NOT NULL,
   `charging_profile_kind` varchar(255) NOT NULL,
   `recurrency_kind` varchar(255) DEFAULT NULL,
-  `valid_from` timestamp(6) NULL DEFAULT NULL,
-  `valid_to` timestamp(6) NULL DEFAULT NULL,
+  `valid_from` timestamp NULL DEFAULT NULL,
+  `valid_to` timestamp NULL DEFAULT NULL,
   `duration_in_seconds` int(11) DEFAULT NULL,
-  `start_schedule` timestamp(6) NULL DEFAULT NULL,
+  `start_schedule` timestamp NULL DEFAULT NULL,
   `charging_rate_unit` varchar(255) NOT NULL,
   `min_charging_rate` decimal(15,1) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
@@ -143,7 +143,7 @@ DROP TABLE IF EXISTS `connector_meter_value`;
 CREATE TABLE `connector_meter_value` (
   `connector_pk` int(11) unsigned NOT NULL,
   `transaction_pk` int(10) unsigned DEFAULT NULL,
-  `value_timestamp` timestamp(6) NULL DEFAULT NULL,
+  `value_timestamp` timestamp NULL DEFAULT NULL,
   `value` text DEFAULT NULL,
   `reading_context` varchar(255) DEFAULT NULL,
   `format` varchar(255) DEFAULT NULL,
@@ -165,7 +165,7 @@ CREATE TABLE `connector_meter_value` (
 DROP TABLE IF EXISTS `connector_status`;
 CREATE TABLE `connector_status` (
   `connector_pk` int(11) unsigned NOT NULL,
-  `status_timestamp` timestamp(6) NULL DEFAULT NULL,
+  `status_timestamp` timestamp NULL DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `error_code` varchar(255) DEFAULT NULL,
   `error_info` varchar(255) DEFAULT NULL,
@@ -185,7 +185,7 @@ CREATE TABLE `ocpp_tag` (
   `ocpp_tag_pk` int(11) NOT NULL AUTO_INCREMENT,
   `id_tag` varchar(255) NOT NULL,
   `parent_id_tag` varchar(255) DEFAULT NULL,
-  `expiry_date` timestamp(6) NULL DEFAULT NULL,
+  `expiry_date` timestamp NULL DEFAULT NULL,
   `max_active_transaction_count` int(11) NOT NULL DEFAULT 1,
   `note` mediumtext DEFAULT NULL,
   PRIMARY KEY (`ocpp_tag_pk`),
@@ -272,10 +272,10 @@ INSERT INTO `settings` (`app_id`, `heartbeat_interval_in_seconds`, `hours_to_exp
 DROP TABLE IF EXISTS `transaction_start`;
 CREATE TABLE `transaction_start` (
   `transaction_pk` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `event_timestamp` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
+  `event_timestamp` timestamp NOT NULL DEFAULT current_timestamp,
   `connector_pk` int(11) unsigned NOT NULL,
   `id_tag` varchar(255) NOT NULL,
-  `start_timestamp` timestamp(6) NULL DEFAULT NULL,
+  `start_timestamp` timestamp NULL DEFAULT NULL,
   `start_value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`transaction_pk`),
   UNIQUE KEY `transaction_pk_UNIQUE` (`transaction_pk`),
@@ -293,9 +293,9 @@ CREATE TABLE `transaction_start` (
 DROP TABLE IF EXISTS `transaction_stop`;
 CREATE TABLE `transaction_stop` (
   `transaction_pk` int(10) unsigned NOT NULL,
-  `event_timestamp` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
-  `event_actor` enum('station','manual') DEFAULT NULL,
-  `stop_timestamp` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
+  `event_timestamp` timestamp NOT NULL DEFAULT current_timestamp,
+  `event_actor` varchar(10) DEFAULT NULL,
+  `stop_timestamp` timestamp NOT NULL DEFAULT current_timestamp,
   `stop_value` varchar(255) NOT NULL,
   `stop_reason` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`transaction_pk`,`event_timestamp`),
@@ -310,9 +310,9 @@ DROP TABLE IF EXISTS `transaction_stop_failed`;
 CREATE TABLE `transaction_stop_failed` (
   `transaction_pk` int(11) DEFAULT NULL,
   `charge_box_id` varchar(255) DEFAULT NULL,
-  `event_timestamp` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
-  `event_actor` enum('station','manual') DEFAULT NULL,
-  `stop_timestamp` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
+  `event_timestamp` timestamp NOT NULL DEFAULT current_timestamp,
+  `event_actor` varchar(10) DEFAULT NULL,
+  `stop_timestamp` timestamp NOT NULL DEFAULT current_timestamp,
   `stop_value` varchar(255) DEFAULT NULL,
   `stop_reason` varchar(255) DEFAULT NULL,
   `fail_reason` text DEFAULT NULL
