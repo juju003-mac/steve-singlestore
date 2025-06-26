@@ -21,7 +21,7 @@ CREATE TABLE `chargebox` (
   `diagnosticsTimestamp` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`chargeBoxId`),
   UNIQUE KEY `chargeBoxId_UNIQUE` (`chargeBoxId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `user`
@@ -35,7 +35,7 @@ CREATE TABLE `user` (
   `blocked` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`idTag`),
   UNIQUE KEY `idTag_UNIQUE` (`idTag`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `connector`
@@ -49,7 +49,7 @@ CREATE TABLE `connector` (
   UNIQUE KEY `connector_pk_UNIQUE` (`connector_pk`),
   UNIQUE KEY `connector_cbid_cid_UNIQUE` (`chargeBoxId`,`connectorId`),
   CONSTRAINT `FK_chargeBoxId_c` FOREIGN KEY (`chargeBoxId`) REFERENCES `chargebox` (`chargeBoxId`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE `connector_status` (
   `vendorErrorCode` varchar(50) DEFAULT NULL,
   KEY `FK_cs_pk_idx` (`connector_pk`),
   CONSTRAINT `FK_cs_pk` FOREIGN KEY (`connector_pk`) REFERENCES `connector` (`connector_pk`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `dbVersion`
@@ -75,7 +75,7 @@ CREATE TABLE `connector_status` (
 CREATE TABLE `dbVersion` (
   `version` varchar(10) NOT NULL,
   `upateTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dbVersion`
@@ -101,7 +101,7 @@ CREATE TABLE `transaction` (
   KEY `connector_pk_idx` (`connector_pk`),
   CONSTRAINT `FK_connector_pk_t` FOREIGN KEY (`connector_pk`) REFERENCES `connector` (`connector_pk`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `FK_idTag_t` FOREIGN KEY (`idTag`) REFERENCES `user` (`idTag`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) DEFAULT CHARSET=latin1;
 
 --
 -- Triggers on table `transaction`
@@ -135,7 +135,7 @@ CREATE TABLE `connector_metervalue` (
   KEY `FK_tid_cm_idx` (`transaction_pk`),
   CONSTRAINT `FK_pk_cm` FOREIGN KEY (`connector_pk`) REFERENCES `connector` (`connector_pk`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `FK_tid_cm` FOREIGN KEY (`transaction_pk`) REFERENCES `transaction` (`transaction_pk`) ON DELETE SET NULL ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `reservation`
@@ -153,7 +153,7 @@ CREATE TABLE `reservation` (
   KEY `FK_chargeBoxId_r_idx` (`chargeBoxId`),
   CONSTRAINT `FK_chargeBoxId_r` FOREIGN KEY (`chargeBoxId`) REFERENCES `chargebox` (`chargeBoxId`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `FK_idTag_r` FOREIGN KEY (`idTag`) REFERENCES `user` (`idTag`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `reservation_expired`
@@ -165,7 +165,7 @@ CREATE TABLE `reservation_expired` (
   `chargeBoxId` varchar(30) NOT NULL,
   `startDatetime` datetime NOT NULL,
   `expiryDatetime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) DEFAULT CHARSET=latin1;
 
 
 --
